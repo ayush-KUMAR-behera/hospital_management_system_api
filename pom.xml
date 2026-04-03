@@ -37,21 +37,22 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
 
-        <!-- ❌ Remove default logging (Logback) -->
+        <!-- ❌ Remove default logging (Logback)
         <exclusions>
             <exclusion>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-logging</artifactId>
             </exclusion>
         </exclusions>
+         -->
     </dependency>
 
-    <!-- 🔥 Log4j2 (your logging system) -->
+    <!-- 🔥 Log4j2 (your logging system) 
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-log4j2</artifactId>
     </dependency>
-
+-->
     <!-- JPA -->
     <dependency>
         <groupId>org.springframework.boot</groupId>

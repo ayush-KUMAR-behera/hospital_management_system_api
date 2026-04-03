@@ -2,14 +2,15 @@ package com.ayush.service;
 
 import java.util.List;
 
-import com.ayush.entity.Patient;
+import com.ayush.dto.PatientRequestDTO;
+import com.ayush.dto.PatientResponseDTO;
 
 public interface PatientService {
 	
-	public List<Patient> getAllPatient();
-	public Patient getPatientById(Long id);
-	public Patient createPatient(Patient patient);
-	public void updatePatient(Long id,Patient patient);
+	public List<PatientResponseDTO> getAllPatient();
+	public PatientResponseDTO getPatientById(Long id);
+	public PatientResponseDTO createPatient(PatientRequestDTO dto);
+	public void updatePatient(Long id,PatientRequestDTO dto);
 	public void deletePatient(Long id);
 
 }
