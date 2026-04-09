@@ -1,5 +1,6 @@
 package com.ayush.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ayush.entity.User;
@@ -13,7 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthService {
 
     private final UserRepository repo;
-
+    private final PasswordEncoder passwordEncoder;
+    
     public String login(String username, String password) {
 
         User user = repo.findByUsername(username);
@@ -22,10 +24,9 @@ public class AuthService {
             throw new RuntimeException("User not found");
         }
 
-        if (!user.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
-
         return JwtUtil.generateToken(user.getUsername(), user.getRole());
     }
 }
