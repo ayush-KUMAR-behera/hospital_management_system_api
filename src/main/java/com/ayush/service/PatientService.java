@@ -1,13 +1,13 @@
 package com.ayush.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.ayush.dto.PatientRequestDTO;
 import com.ayush.dto.PatientResponseDTO;
 
 public interface PatientService {
 	
-	public List<PatientResponseDTO> getAllPatient();
+	public Page<PatientResponseDTO> getAllPatient(int page,int size,String sortBy);
 	public PatientResponseDTO getPatientById(Long id);
 	public PatientResponseDTO createPatient(PatientRequestDTO dto);
 	public void updatePatient(Long id,PatientRequestDTO dto);

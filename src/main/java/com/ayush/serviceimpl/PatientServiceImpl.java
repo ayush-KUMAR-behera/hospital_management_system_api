@@ -5,6 +5,11 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ayush.dto.PatientRequestDTO;
@@ -23,24 +28,28 @@ public class PatientServiceImpl implements PatientService {
 	private static final Logger logger=LoggerFactory.getLogger(PatientServiceImpl.class);
 	private final PatientRepository repo;
 
-
+	
 	@Override
-	public List<PatientResponseDTO> getAllPatient() {
+	public Page<PatientResponseDTO> getAllPatient(int page, int size, String sortBy) {
+		  logger.info("Fetching patients with pagination: page={}, size={}, sortBy={}", page, size, sortBy);
+
+		    Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
+		    Page<Patient> patientPage = repo.findByDeletedFalse(pageable);
+		    List<PatientResponseDTO> dtoList = new ArrayList<>();
+
+		    for (Patient p : patientPage.getContent()) {
+		        PatientResponseDTO dto = new PatientResponseDTO();
+		        dto.setId(p.getId());
+		        dto.setName(p.getName());
+		        dto.setAge(p.getAge());
+		        dto.setGender(p.getGender());
+		        dtoList.add(dto);
+		    }
+
+		    return new PageImpl<>(dtoList, pageable, patientPage.getTotalElements());
 		
-		logger.info("Fetching all active patients");
-		
-		List<Patient> list=repo.findByDeletedFalse();
-		List<PatientResponseDTO> dtolist=new ArrayList<PatientResponseDTO>();
-		for(Patient p:list) {
-			PatientResponseDTO dto=new PatientResponseDTO();
-			dto.setId(p.getId());
-			dto.setAge(p.getAge());
-			dto.setGender(p.getGender());
-			dto.setName(p.getName());
-			dtolist.add(dto);
-		}
-		return dtolist;
 	}
+
 
 	@Override
 	public PatientResponseDTO getPatientById(Long id) {
@@ -140,5 +149,7 @@ public class PatientServiceImpl implements PatientService {
 		logger.info("Soft deleting patient with id: {}",id);
 		
 	}
+
+	
 
 }
