@@ -1,7 +1,5 @@
 package com.ayush.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ayush.entity.Doctor;
+import com.ayush.service.DoctorService;
 import com.ayush.serviceimpl.DoctorServiceImpl;
 
 import jakarta.validation.Valid;
@@ -24,7 +23,7 @@ import com.ayush.dto.*;
 @RequestMapping("/api/v1/doctors")
 @RequiredArgsConstructor
 public class DoctorController {
-	private final DoctorServiceImpl service;
+	private final DoctorService service;
 	
     @GetMapping
     public Page<DoctorResponseDTO> getAllDoctors(

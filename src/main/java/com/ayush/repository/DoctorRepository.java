@@ -11,4 +11,5 @@ import com.ayush.entity.Doctor;
 public interface DoctorRepository extends JpaRepository<Doctor,Long> {
 	List<Doctor> findByDeletedFalse();
 	Page<Doctor> findByDeletedFalse(Pageable pageable); 
+
 }
