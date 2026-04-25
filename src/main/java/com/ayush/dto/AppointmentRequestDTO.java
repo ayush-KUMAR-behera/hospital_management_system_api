@@ -15,7 +15,7 @@ public class AppointmentRequestDTO {
 	private Long patientId;
 	@NotNull(message = " Doctor Id is Required")
 	private Long doctorId;
-	@Future(message = "Appointment Date is Required")
+	@Future(message = "Appointment Date must be in future")
 	private LocalDateTime appointmentTime;
 	
 }
