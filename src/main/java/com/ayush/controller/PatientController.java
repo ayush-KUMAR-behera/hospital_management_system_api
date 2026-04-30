@@ -1,7 +1,5 @@
  package com.ayush.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ayush.dto.PatientRequestDTO;
 import com.ayush.dto.PatientResponseDTO;
-import com.ayush.entity.Patient;
 import com.ayush.service.PatientService;
 
 import jakarta.validation.Valid;
@@ -39,7 +36,6 @@ public class PatientController {
 	
 	@GetMapping("/{id}")
 	public PatientResponseDTO getPatientById(@PathVariable Long id) {
-		System.out.println("Fetching patient by Id");
 		return service.getPatientById(id);
 	}
 	

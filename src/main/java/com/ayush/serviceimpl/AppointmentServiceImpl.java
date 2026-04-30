@@ -100,6 +100,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public AppointmentResponseDTO updateAppointment(Long id, AppointmentRequestDTO dto) {
 
+    	logger.info("Updating appointment with id: {}", id);
+    	
         Appointment appointment = repo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment not found"));
 

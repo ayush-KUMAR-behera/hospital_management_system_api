@@ -8,6 +8,7 @@ import jakarta.servlet.http.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,8 @@ public class JwtFilter extends OncePerRequestFilter {
 	private static final Logger logger =
 	        LoggerFactory.getLogger(JwtFilter.class);
 
-    private final String SECRET = "mysecretkeymysecretkeymysecretkey123";
+	@Value("${jwt.secret}")
+    private  String SECRET;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

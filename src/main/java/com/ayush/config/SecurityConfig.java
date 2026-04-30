@@ -1,7 +1,5 @@
 package com.ayush.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.annotation.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,11 +12,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.ayush.util.JwtFilter;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-	@Autowired
-	private JwtFilter jwtFilter;
+	
+	private final JwtFilter jwtFilter;
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -34,10 +35,6 @@ public class SecurityConfig {
 		                "/swagger-ui/**",
 		                "/swagger-ui.html"
 		        ).permitAll()
-	    		
-
-	        // OPEN
-	        .requestMatchers("/api/v1/auth/**").permitAll()
 
 	        // GET → both ADMIN & DOCTOR
 	        .requestMatchers(HttpMethod.GET, "/api/v1/patients/**")
@@ -55,6 +52,28 @@ public class SecurityConfig {
 	        .requestMatchers(HttpMethod.PUT, "/api/v1/patients/**")
 	            .hasRole("ADMIN")
 
+	         // Doctor end points
+	            .requestMatchers(HttpMethod.GET, "/api/v1/doctors/**").hasAnyRole("ADMIN", "DOCTOR")
+	            .requestMatchers(HttpMethod.POST, "/api/v1/doctors/**").hasRole("ADMIN")
+	            .requestMatchers(HttpMethod.PUT, "/api/v1/doctors/**").hasRole("ADMIN")
+	            .requestMatchers(HttpMethod.DELETE, "/api/v1/doctors/**").hasRole("ADMIN")
+
+	            
+	            
+	         // Appointment endpoints
+	            .requestMatchers(HttpMethod.GET, "/api/v1/appointments/**")
+	                .hasAnyRole("ADMIN", "DOCTOR")
+	                
+	            .requestMatchers(HttpMethod.POST, "/api/v1/appointments/**")
+	                .hasAnyRole("ADMIN", "DOCTOR")
+	                
+	            .requestMatchers(HttpMethod.PUT, "/api/v1/appointments/**")
+	                .hasAnyRole("ADMIN", "DOCTOR")
+	                
+	            .requestMatchers(HttpMethod.DELETE, "/api/v1/appointments/**")
+	                .hasRole("ADMIN")
+	            
+	            
 	        .anyRequest().authenticated()
 	        
 	        
