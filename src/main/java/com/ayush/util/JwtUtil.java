@@ -20,9 +20,9 @@ import java.util.Date;
 public class JwtUtil {
 
 	@Value("${jwt.secret}")
-	private static String secret;
+	private String secret;
 
-    public static String generateToken(String username,String role) {
+    public  String generateToken(String username,String role) {
         Key key = Keys.hmacShaKeyFor(secret.getBytes());
 
         return Jwts.builder()

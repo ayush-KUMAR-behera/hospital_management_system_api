@@ -38,7 +38,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Page<AppointmentResponseDTO> getAllAppointments(int page, int size, String sortBy) {
     	
-    	logger.info("Fetch All Appoints");
+    	logger.info("Fetch All Appointments");
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).ascending());
 
@@ -141,6 +141,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         logger.info("Appointment soft deleted: {}", id);
     }
 
+    
    
     private AppointmentResponseDTO mapToResponse(Appointment appointment) {
 

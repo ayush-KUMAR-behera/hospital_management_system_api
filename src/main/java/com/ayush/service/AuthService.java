@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+	
+	private final JwtUtil jwtUtil;
 
     private final UserRepository repo;
     private final PasswordEncoder passwordEncoder;
@@ -27,6 +29,6 @@ public class AuthService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
-        return JwtUtil.generateToken(user.getUsername(), user.getRole());
+        return jwtUtil.generateToken(user.getUsername(), user.getRole());
     }
 }
