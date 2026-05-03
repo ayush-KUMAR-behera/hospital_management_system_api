@@ -34,9 +34,14 @@ public class PatientController {
       return service.getAllPatient(page, size, sortBy);
   }
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id/{id}")
 	public PatientResponseDTO getPatientById(@PathVariable Long id) {
 		return service.getPatientById(id);
+	}
+	
+	@GetMapping("/email/{email}")
+	public PatientResponseDTO getByEmail(@PathVariable String email) {
+		return service.getByEmail(email);
 	}
 	
 	@PostMapping

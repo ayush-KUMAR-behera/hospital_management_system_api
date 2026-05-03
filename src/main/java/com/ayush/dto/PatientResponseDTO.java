@@ -10,4 +10,5 @@ public class PatientResponseDTO {
 	private String name;
 	private String gender;
 	private Integer age;
+	private String email;
 }

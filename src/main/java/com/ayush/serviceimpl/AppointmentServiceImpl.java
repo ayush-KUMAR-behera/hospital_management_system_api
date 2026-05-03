@@ -20,6 +20,7 @@ import com.ayush.repository.AppointmentRepository;
 import com.ayush.repository.DoctorRepository;
 import com.ayush.repository.PatientRepository;
 import com.ayush.service.AppointmentService;
+import com.ayush.service.EmailService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +31,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository repo;
     private final PatientRepository patientRepo;
     private final DoctorRepository doctorRepo;
+    private final EmailService emailService;
 
     private static final Logger logger =
             LoggerFactory.getLogger(AppointmentServiceImpl.class);
@@ -92,7 +94,13 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setAppointmentTime(dto.getAppointmentTime());
 
         Appointment saved = repo.save(appointment);
-
+        
+        emailService.sendAppointmentConfirmation(
+        		patient.getEmail(),
+        		patient.getName(),
+        		doctor.getName(),
+        		dto.getAppointmentTime());
+        
         return mapToResponse(saved);
     }
     

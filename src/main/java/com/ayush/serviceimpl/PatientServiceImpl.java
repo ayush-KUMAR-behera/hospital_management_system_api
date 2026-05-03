@@ -43,6 +43,7 @@ public class PatientServiceImpl implements PatientService {
 		        dto.setName(p.getName());
 		        dto.setAge(p.getAge());
 		        dto.setGender(p.getGender());
+		        dto.setEmail(p.getEmail());
 		        dtoList.add(dto);
 		    }
 
@@ -78,6 +79,7 @@ public class PatientServiceImpl implements PatientService {
 		dto.setName(p.getName());
 		dto.setAge(p.getAge());
 		dto.setGender(p.getGender());
+		dto.setEmail(p.getEmail());
 		return dto;
 	}
 
@@ -90,12 +92,14 @@ public class PatientServiceImpl implements PatientService {
 	  patient.setName(dto.getName());
 	  patient.setAge(dto.getAge());
 	  patient.setGender(dto.getGender());
+	  patient.setEmail(dto.getEmail());
 	  Patient p=repo.save(patient);
 		PatientResponseDTO res=new PatientResponseDTO();
 		res.setId(p.getId());
 		res.setName(p.getName());
 		res.setAge(p.getAge());
 		res.setGender(p.getGender());
+		res.setEmail(p.getEmail());
 		return res;
 	}
 
@@ -124,6 +128,7 @@ public class PatientServiceImpl implements PatientService {
 		p.setAge(dto.getAge());
 		p.setName(dto.getName());
 		p.setGender(dto.getGender());
+		p.setEmail(dto.getEmail());
 		repo.save(p);
 	}
 
@@ -148,6 +153,22 @@ public class PatientServiceImpl implements PatientService {
 		
 		logger.info("Soft deleting patient with id: {}",id);
 		
+	}
+
+
+	@Override
+	public PatientResponseDTO getByEmail(String email) {
+		  Patient p = repo.findByEmail(email)
+		            .orElseThrow(() ->
+		            	new ResourceNotFoundException("Patient not found with email: " + email));	
+		  PatientResponseDTO dto=new PatientResponseDTO();
+		    dto.setId(p.getId());
+			dto.setName(p.getName());
+			dto.setAge(p.getAge());
+			dto.setGender(p.getGender());
+			dto.setEmail(p.getEmail());
+			
+			return dto;
 	}
 
 	

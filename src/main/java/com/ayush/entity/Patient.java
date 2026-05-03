@@ -27,16 +27,25 @@ public class Patient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(nullable = false)
 	private String name;
+	
 	@Column(nullable = false)
 	private String gender;
+	
 	@Column(nullable = false)
 	private Integer age;
+	
+	@Column(nullable = false,unique = true)
+	private String email;
+	
 	@Column(updatable = false)
 	private LocalDateTime createdAt;
+	
 	@Column(nullable = false)
 	private LocalDateTime updatedAt;
+	
 	private Boolean deleted=false;
 	
 	@PrePersist

@@ -7,4 +7,5 @@ import com.ayush.entity.Bill;
 
 public interface BillRepository extends JpaRepository<Bill,Long> {
 	boolean existsByAppointment(Appointment appointment);
+
 }
