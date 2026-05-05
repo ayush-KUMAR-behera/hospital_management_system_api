@@ -74,6 +74,9 @@ public class SecurityConfig {
 	                .hasRole("ADMIN")
 	            
 	            
+	                // Actuator
+	                .requestMatchers("/actuator/**").hasRole("ADMIN")
+	                
 	        .anyRequest().authenticated()
 	        
 	        
