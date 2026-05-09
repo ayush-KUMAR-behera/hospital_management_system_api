@@ -116,8 +116,47 @@ public class PatientServiceImplTest {
 			// ASSERT
 			assertEquals(2l,res.getId());
 			
+		}
+		
+		// TEST 5-> delete Patient should soft delete Successfully
+		
+		@Test
+		void deletePatient_shouldSoftDelete_whenPatientExists() {
 			
+			// ARRANGE
+			Patient patient=new Patient();
+			patient.setId(1l);
+			patient.setName("Lucy");
+			patient.setDeleted(false);
+			
+			when(repo.findById(1l)).thenReturn(Optional.of(patient));
+			
+			// ACT
+			service.deletePatient(1l);
+			
+			// ASSERT
+			assertEquals(true,patient.getDeleted());
+			verify(repo,times(1)).save(patient);
 		}
 	
+		
+	// Test 6 - delete Patient should throw when already deleted
+	  
+		@Test
+		void deletePatient_shouldThrow_whenAlreadyDeleted() {
+			
+			// ARRANGE
+			Patient patient=new Patient();
+			patient.setId(1l);
+			patient.setDeleted(true); // it means already deleted
+			
+			when(repo.findById(1l)).thenReturn(Optional.of(patient));
+			
+			// ACT + ASSERT
+			assertThrows(ResourceNotFoundException.class,()->{
+				service.deletePatient(1l);
+			});
+			
+		}
 	
 }
